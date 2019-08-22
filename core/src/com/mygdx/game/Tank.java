@@ -13,15 +13,15 @@ public class Tank {
         texture = new Texture("Tank.png");
         x = 100;
         y = 100;
-        speed = 5;
+        speed = 100;
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, x, y);
     }
 
-    public void update() {
-        x += speed;
+    public void update(float dt) {
+        x += speed * dt;
     }
 
 }

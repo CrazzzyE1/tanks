@@ -18,7 +18,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		update();
+		float dt = Gdx.graphics.getDeltaTime();
+		update(dt);
 		Gdx.gl.glClearColor(0, 0.6f, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
@@ -28,8 +29,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.end();
 	}
 
-	public void update() {
-		tank.update();
+	public void update(float dt) {
+		tank.update(dt);
 	}
 	
 	@Override
