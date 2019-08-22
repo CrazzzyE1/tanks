@@ -33,7 +33,7 @@ public class Bullet {
     }
 
     private void activate (float x, float y, float vx, float vy) {
-        active = true;
+        this.active = true;
         this.x = x;
         this.y = y;
         this.vx = vx;
