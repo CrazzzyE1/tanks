@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+// to Second version - Note REALISE!!!
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Tank tank;
