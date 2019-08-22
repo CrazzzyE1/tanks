@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+	private SpriteBatch batch;
+	private Tank tank;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("Tank.png");
+		tank = new Tank();
 	}
 
 	@Override
@@ -23,18 +23,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		// Место где происходит вся движуха кода
+		tank.render(batch);
 
-		batch.draw(img, 200, 200);
 		batch.end();
 	}
 
 	public void update() {
-		
+		tank.update();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }
