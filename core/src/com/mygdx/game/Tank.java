@@ -10,6 +10,7 @@ public class Tank {
     private  float x;
     private float y;
     private float speed;
+    private float angle;
 
     public Tank() {
         texture = new Texture("Tank.png");
@@ -19,7 +20,8 @@ public class Tank {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y);
+        batch.draw(texture, x, y, 16, 16 , 32,32,1,1, angle, 0, 0, 32,32,false,false);
+
     }
 
     public void update(float dt) {
@@ -29,18 +31,22 @@ public class Tank {
     public void checkMovement(float dt) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             x -= speed * dt;
+            angle = 180.0f;
             return;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             x += speed * dt;
+            angle = 0.0f;
             return;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)){
             y += speed * dt;
+            angle = 90.0f;
             return;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             y -= speed * dt;
+            angle = 270.0f;
             return;
         }
     }
