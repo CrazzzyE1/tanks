@@ -14,13 +14,13 @@ public class Tank {
 
     public Tank() {
         texture = new Texture("Tank.png");
-        x = 100;
-        y = 100;
+        x = 0;
+        y = 0;
         speed = 100;
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y, 16, 16 , 32,32,1,1, angle, 0, 0, 32,32,false,false);
+        batch.draw(texture, x - 16, y - 16, 16, 16 , 32,32,1,1, angle, 0, 0, 32,32,false,false);
 
     }
 
