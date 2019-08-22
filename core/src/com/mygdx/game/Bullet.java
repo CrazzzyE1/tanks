@@ -28,11 +28,11 @@ public class Bullet {
         batch.draw(texture, x - 8, y - 8);
     }
 
-    private void deactivate () {
+    public void deactivate () {
         active = false;
     }
 
-    private void activate (float x, float y, float vx, float vy) {
+    public void activate (float x, float y, float vx, float vy) {
         this.active = true;
         this.x = x;
         this.y = y;
