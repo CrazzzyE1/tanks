@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -21,7 +23,26 @@ public class Tank {
     }
 
     public void update(float dt) {
-        x += speed * dt;
+        checkMovement(dt);
+    }
+
+    public void checkMovement(float dt) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            x -= speed * dt;
+            return;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            x += speed * dt;
+            return;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+            y += speed * dt;
+            return;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            y -= speed * dt;
+            return;
+        }
     }
 
 }
