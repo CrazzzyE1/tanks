@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Bullet {
     private Vector2 position;
     private Vector2 velocity;
+    private int damage;
     private boolean active;
 
     public Vector2 getPosition() {
@@ -17,20 +18,26 @@ public class Bullet {
         return active;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
     public Bullet() {
         this.position = new Vector2();
         this.velocity = new Vector2();
         this.active = false;
+        this.damage = 0;
     }
 
     public void deactivate () {
         active = false;
     }
 
-    public void activate (float x, float y, float vx, float vy) {
+    public void activate (float x, float y, float vx, float vy, int damage) {
         this.active = true;
         this.position.set(x, y);
         this.velocity.set(vx, vy);
+        this.damage = damage;
     }
 
     public void update (float dt) {
