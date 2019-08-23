@@ -9,17 +9,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Tank tank;
-	private Bullet bullet;
+	private BulletEmitter bulletEmitter;
 
-	public Bullet getBullet() {
-		return bullet;
+	public BulletEmitter getBulletEmitter() {
+		return bulletEmitter;
 	}
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		tank = new Tank(this);
-		bullet = new Bullet();
+		bulletEmitter = new BulletEmitter();
 
 	}
 
@@ -32,18 +32,14 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		// Место где происходит вся движуха кода
 		tank.render(batch);
-		if(bullet.isActive()){
-			bullet.render(batch);
-		}
+		bulletEmitter.render(batch);
 
 		batch.end();
 	}
 
 	public void update(float dt) {
 		tank.update(dt);
-		if(bullet.isActive()){
-			bullet.update(dt);
-		}
+		bulletEmitter.update(dt);
 
 	}
 	
