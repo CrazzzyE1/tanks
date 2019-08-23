@@ -14,6 +14,8 @@ public class Tank {
     private float speed;
     private float angle;
     private float turretAngle;
+    private int width;
+    private int height;
 
     public Tank(MyGdxGame game) {
         this.game = game;
@@ -21,11 +23,14 @@ public class Tank {
         this.textureTurret = new Texture("simple_weapon.png");
         this.position = new Vector2(100.0f, 100.0f);
         this.speed = 100.0f;
+        this.width = texture.getWidth();
+        this.height = texture.getHeight();
+
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x - 20, position.y - 20, 20, 20 , 40,40,1,1, angle, 0, 0, 40,40,false,false);
-        batch.draw(textureTurret, position.x - 20, position.y - 20, 20, 20 , 40,40,1,1, turretAngle, 0, 0, 40,40,false,false);
+        batch.draw(texture, position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, angle, 0, 0, width,height,false,false);
+        batch.draw(textureTurret, position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, turretAngle, 0, 0, width,height,false,false);
 
     }
 
