@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 // to Second version - Note REALISE!!!
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
+	private Map map;
 	private Tank tank;
 	private BulletEmitter bulletEmitter;
 
@@ -18,6 +19,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		map = new Map();
 		tank = new Tank(this);
 		bulletEmitter = new BulletEmitter();
 
@@ -30,7 +32,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0.6f, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		// Место где происходит вся движуха кода
+		map.render(batch);
 		tank.render(batch);
 		bulletEmitter.render(batch);
 
