@@ -9,24 +9,33 @@ import com.badlogic.gdx.math.Vector2;
 public class Tank {
     private MyGdxGame game;
     private Texture texture;
+    private Texture textureTurret;
     private Vector2 position;
     private float speed;
     private float angle;
+    private float turretAngle;
 
     public Tank(MyGdxGame game) {
         this.game = game;
         this.texture = new Texture("player_tank_base.png");
+        this.textureTurret = new Texture("simple_weapon.png");
         this.position = new Vector2(100.0f, 100.0f);
         this.speed = 100.0f;
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - 20, position.y - 20, 20, 20 , 40,40,1,1, angle, 0, 0, 40,40,false,false);
+        batch.draw(textureTurret, position.x - 20, position.y - 20, 20, 20 , 40,40,1,1, turretAngle, 0, 0, 40,40,false,false);
 
     }
 
     public void update(float dt) {
         checkMovement(dt);
+        float mx = Gdx.input.getX();
+        float my = Gdx.graphics.getHeight() - Gdx.input.getY();
+        float angleTo = Utils.getAngle(position.x, position.y, mx, my);
+        turretAngle = Utils.makeRotation(turretAngle, angleTo, 180.0f, dt);
+        turretAngle = Utils.angleToFromNegPiToPosPi(turretAngle);
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             fire();
         }
