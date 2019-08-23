@@ -18,7 +18,7 @@ public class Weapon {
 
     public Weapon() {
         this.texture = new Texture("simple_weapon.png");
-        this.firePeriod = 0.1f;
+        this.firePeriod = 0.2f;
         this.damage = 1;
     }
 
