@@ -15,14 +15,14 @@ public class Tank {
 
     public Tank(MyGdxGame game) {
         this.game = game;
-        this.texture = new Texture("Tank.png");
+        this.texture = new Texture("player_tank_base.png");
         this.x = 0.0f;
         this.y = 0.0f;
         this.speed = 100.0f;
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x - 16, y - 16, 16, 16 , 32,32,1,1, angle, 0, 0, 32,32,false,false);
+        batch.draw(texture, x - 20, y - 20, 20, 20 , 40,40,1,1, angle, 0, 0, 40,40,false,false);
 
     }
 
