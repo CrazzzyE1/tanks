@@ -3,13 +3,15 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.units.PlayerTank;
+import com.mygdx.game.units.Tank;
+
 // to Second version - Note REALISE!!!
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Map map;
-	private Tank tank;
+	private PlayerTank player ;
 	private BulletEmitter bulletEmitter;
 
 	public BulletEmitter getBulletEmitter() {
@@ -20,7 +22,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		map = new Map();
-		tank = new Tank(this);
+		player = new PlayerTank(this);
 		bulletEmitter = new BulletEmitter();
 
 	}
@@ -33,14 +35,14 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		map.render(batch);
-		tank.render(batch);
+		player.render(batch);
 		bulletEmitter.render(batch);
 
 		batch.end();
 	}
 
 	public void update(float dt) {
-		tank.update(dt);
+		player.update(dt);
 		bulletEmitter.update(dt);
 
 	}
