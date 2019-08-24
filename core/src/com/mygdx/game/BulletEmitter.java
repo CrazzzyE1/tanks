@@ -8,10 +8,14 @@ public class BulletEmitter {
     private Bullet[] bullets;
     public static final int MAX_BULLETS_COUNT = 500;
 
+    public Bullet[] getBullets() {
+        return bullets;
+    }
+
     public BulletEmitter() {
         this.bulletTexture = new Texture("projectile.png");
         this.bullets = new Bullet[MAX_BULLETS_COUNT];
-        for (int i = 0; i < MAX_BULLETS_COUNT; i++) {
+        for (int i = 0; i < bullets.length; i++) {
             this.bullets[i] = new Bullet();
         }
     }
