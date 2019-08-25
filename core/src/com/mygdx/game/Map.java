@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Map {
     public static final int SAZE_X = 32;
@@ -9,10 +11,10 @@ public class Map {
     public static final int CELL_SIZE = 40;
 
 
-    private Texture grassTexture;
+    private TextureRegion grassTexture;
 
-    public Map() {
-        this.grassTexture = new Texture("grass40.png");
+    public Map(TextureAtlas atlas) {
+        this.grassTexture = atlas.findRegion("grass40");
     }
 
     public void render(SpriteBatch batch) {

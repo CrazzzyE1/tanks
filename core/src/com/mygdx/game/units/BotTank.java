@@ -1,6 +1,8 @@
 package com.mygdx.game.units;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
@@ -17,14 +19,14 @@ public class BotTank extends Tank {
         return active;
     }
 
-    public BotTank(MyGdxGame game) {
+    public BotTank(MyGdxGame game, TextureAtlas atlas) {
         super(game);
-        this.weapon = new Weapon();
-        this.texture = new Texture("bot_tank_base.png");
+        this.weapon = new Weapon(atlas);
+        this.texture = atlas.findRegion("botTankBase");
         this.position = new Vector2(500.0f, 500.0f);
         this.speed = 100.0f;
-        this.width = texture.getWidth();
-        this.height = texture.getHeight();
+        this.width = texture.getRegionWidth();
+        this.height = texture.getRegionHeight();
         this.hpMax = 3;
         this.hp = this.hpMax;
         this.aiTimerTo = 3.0f;

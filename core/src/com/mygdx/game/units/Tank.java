@@ -2,6 +2,7 @@ package com.mygdx.game.units;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.utils.Utils;
@@ -10,7 +11,7 @@ import com.mygdx.game.Weapon;
 public abstract class Tank {
      MyGdxGame game;
      Weapon weapon;
-     Texture texture;
+     TextureRegion texture;
      Vector2 position;
 
      float speed;
@@ -28,8 +29,8 @@ public abstract class Tank {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, angle, 0, 0, width,height,false,false);
-        batch.draw(weapon.getTexture(), position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, turretAngle, 0, 0, width,height,false,false);
+        batch.draw(texture, position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, angle);
+        batch.draw(weapon.getTexture(), position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, turretAngle);
 
     }
 

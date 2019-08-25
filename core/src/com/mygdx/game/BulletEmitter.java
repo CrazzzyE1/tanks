@@ -2,9 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class BulletEmitter {
-    private Texture bulletTexture;
+    private TextureRegion bulletTexture;
     private Bullet[] bullets;
     public static final int MAX_BULLETS_COUNT = 500;
 
@@ -12,8 +14,8 @@ public class BulletEmitter {
         return bullets;
     }
 
-    public BulletEmitter() {
-        this.bulletTexture = new Texture("projectile.png");
+    public BulletEmitter(TextureAtlas atlas) {
+        this.bulletTexture = atlas.findRegion("projectile");
         this.bullets = new Bullet[MAX_BULLETS_COUNT];
         for (int i = 0; i < bullets.length; i++) {
             this.bullets[i] = new Bullet();

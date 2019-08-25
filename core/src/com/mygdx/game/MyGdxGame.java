@@ -3,7 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.units.PlayerTank;
 import com.mygdx.game.units.Tank;
@@ -23,11 +25,12 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		TextureAtlas atlas = new TextureAtlas("game.pak");
 		batch = new SpriteBatch();
-		map = new Map();
-		player = new PlayerTank(this);
-		bulletEmitter = new BulletEmitter();
-		botEmitter = new BotEmitter(this);
+		map = new Map(atlas);
+		player = new PlayerTank(this, atlas);
+		bulletEmitter = new BulletEmitter(atlas);
+		botEmitter = new BotEmitter(this, atlas);
 		botEmitter.activate(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight()));
 
 
