@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.units.PlayerTank;
 import com.mygdx.game.units.Tank;
 
-// to Second version - Note REALISE!!!
+// to Third version - Note REALISE!!!
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Map map;
