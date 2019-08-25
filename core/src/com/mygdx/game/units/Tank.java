@@ -1,5 +1,6 @@
 package com.mygdx.game.units;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -34,7 +35,23 @@ public abstract class Tank {
 
     }
 
-    public abstract void update(float dt);
+    public void update(float dt) {
+        fireTimer += dt;
+        if (position.x < 0.0f) {
+            position.x = 0.0f;
+        }
+
+        if (position.x > Gdx.graphics.getWidth()) {
+            position.x = Gdx.graphics.getWidth();
+        }
+        if (position.y < 0.0f) {
+            position.y = 0.0f;
+        }
+
+        if (position.y > Gdx.graphics.getHeight()) {
+            position.y = Gdx.graphics.getHeight();
+        }
+    }
 
     public void rotateTurretToPoint(float pointX, float pointY, float dt) {
         float angleTo = Utils.getAngle(position.x, position.y, pointX, pointY);

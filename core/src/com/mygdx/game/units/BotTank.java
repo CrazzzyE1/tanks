@@ -45,7 +45,6 @@ public class BotTank extends Tank {
 
     public void update(float dt) {
         aiTimer += dt;
-        fireTimer += dt;
         if(aiTimer >= aiTimerTo) {
             aiTimer = 0.0f;
             aiTimerTo = MathUtils.random(2.5f, 4.0f);
@@ -53,5 +52,6 @@ public class BotTank extends Tank {
             angle = preferredDirection.getAngel();
         }
         position.add(speed * preferredDirection.getVx() * dt, speed * preferredDirection.getVy() * dt);
+        super.update(dt);
     }
 }
