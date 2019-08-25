@@ -15,6 +15,7 @@ public class PlayerTank extends Tank {
         super(game);
         this.weapon = new Weapon(atlas);
         this.texture = atlas.findRegion("playerTankBase");
+        this.textureHp = atlas.findRegion("bar");
         this.position = new Vector2(100.0f, 100.0f);
         this.speed = 100.0f;
         this.width = texture.getRegionWidth();

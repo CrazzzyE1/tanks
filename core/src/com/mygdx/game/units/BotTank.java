@@ -23,6 +23,8 @@ public class BotTank extends Tank {
         super(game);
         this.weapon = new Weapon(atlas);
         this.texture = atlas.findRegion("botTankBase");
+        this.textureHp = atlas.findRegion("bar");
+
         this.position = new Vector2(500.0f, 500.0f);
         this.speed = 100.0f;
         this.width = texture.getRegionWidth();

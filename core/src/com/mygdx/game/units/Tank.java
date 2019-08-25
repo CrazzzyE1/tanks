@@ -13,6 +13,8 @@ public abstract class Tank {
      MyGdxGame game;
      Weapon weapon;
      TextureRegion texture;
+     TextureRegion textureHp;
+
      Vector2 position;
 
      float speed;
@@ -32,7 +34,7 @@ public abstract class Tank {
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, angle);
         batch.draw(weapon.getTexture(), position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, turretAngle);
-
+        batch.draw(textureHp, position.x - width / 2, position.y + height / 2 - 8);
     }
 
     public void update(float dt) {
