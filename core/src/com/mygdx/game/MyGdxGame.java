@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
+import com.mygdx.game.units.BotTank;
 import com.mygdx.game.units.PlayerTank;
 import com.mygdx.game.units.Tank;
 
@@ -60,7 +61,24 @@ public class MyGdxGame extends ApplicationAdapter {
 		player.update(dt);
 		botEmitter.update(dt);
 		bulletEmitter.update(dt);
+		checkCollisions();
+	}
 
+	public void checkCollisions () {
+		for (int i = 0; i < bulletEmitter.getBullets().length; i++) {
+			Bullet bullet = bulletEmitter.getBullets()[i];
+			if (bullet.isActive()){
+				for (int j = 0; j < botEmitter.getBots().length; j++) {
+					BotTank bot = botEmitter.getBots()[j];
+					if (bot.isActive()) {
+						if (bot.getCircle().contains(bullet.getPosition())) {
+							bullet.deactivate();
+							bot.takeDamage(bullet.getDamage());
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@Override

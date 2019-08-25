@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.utils.Utils;
@@ -16,6 +17,7 @@ public abstract class Tank {
      TextureRegion textureHp;
 
      Vector2 position;
+     Circle circle;
 
      float speed;
      float angle;
@@ -26,6 +28,10 @@ public abstract class Tank {
 
      int hp;
      int hpMax;
+
+    public Circle getCircle() {
+        return circle;
+    }
 
     public Tank(MyGdxGame game) {
         this.game = game;
@@ -45,6 +51,15 @@ public abstract class Tank {
 
     }
 
+    public void takeDamage(int damage) {
+        hp -= damage;
+        if (hp <= 0) {
+            destroy();
+        }
+    }
+
+    public abstract void destroy ();
+
     public void update(float dt) {
         fireTimer += dt;
         if (position.x < 0.0f) {
@@ -61,6 +76,9 @@ public abstract class Tank {
         if (position.y > Gdx.graphics.getHeight()) {
             position.y = Gdx.graphics.getHeight();
         }
+
+        circle.setPosition(position);
+
     }
 
     public void rotateTurretToPoint(float pointX, float pointY, float dt) {

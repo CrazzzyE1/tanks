@@ -3,6 +3,7 @@ package com.mygdx.game.units;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
@@ -33,6 +34,7 @@ public class BotTank extends Tank {
         this.hp = this.hpMax;
         this.aiTimerTo = 3.0f;
         this.preferredDirection = Direction.UP;
+        this.circle = new Circle(position.x, position.y, (width + height)/2);
     }
 
     public void activate (float x, float y) {
@@ -43,6 +45,11 @@ public class BotTank extends Tank {
         position.set(x, y);
         aiTimer = 0.0f;
         active = true;
+    }
+
+    @Override
+    public void destroy() {
+        active = false;
     }
 
     public void update(float dt) {
