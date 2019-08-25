@@ -43,7 +43,7 @@ public abstract class Tank {
 
 
     public void fire(float dt) {
-            fireTimer += dt;
+
             if (fireTimer >= weapon.getFirePeriod()) {
                 fireTimer = 0.0f;
                 float angleRad = (float)Math.toRadians(turretAngle);

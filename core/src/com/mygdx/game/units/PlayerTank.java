@@ -46,6 +46,7 @@ public class PlayerTank extends Tank {
     }
 
     public void update(float dt) {
+        fireTimer += dt;
         checkMovement(dt);
         float mx = Gdx.input.getX();
         float my = Gdx.graphics.getHeight() - Gdx.input.getY();
