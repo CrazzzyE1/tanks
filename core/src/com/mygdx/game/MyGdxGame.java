@@ -68,6 +68,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		botEmitter.update(dt);
 		bulletEmitter.update(dt);
 		checkCollisions();
+
 	}
 
 	public void checkCollisions () {
@@ -88,6 +89,8 @@ public class MyGdxGame extends ApplicationAdapter {
 					bullet.deactivate();
 					player.takeDamage(bullet.getDamage());
 				}
+
+				map.checkWallAndBulletsCollision(bullet);
 			}
 		}
 	}
