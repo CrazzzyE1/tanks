@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.units.Tank;
 
 public class BulletEmitter {
     private TextureRegion bulletTexture;
@@ -22,10 +23,10 @@ public class BulletEmitter {
         }
     }
 
-    public void activate(float x, float y, float vx, float vy, int damage){
+    public void activate(Tank owner, float x, float y, float vx, float vy, int damage){
         for (int i = 0; i < bullets.length; i++) {
             if(!bullets[i].isActive()){
-                bullets[i].activate(x, y, vx, vy, damage);
+                bullets[i].activate(owner, x, y, vx, vy, damage);
                 break;
             }
         }

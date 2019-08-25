@@ -1,5 +1,6 @@
 package com.mygdx.game.units;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,11 +10,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Weapon;
 import com.mygdx.game.utils.Direction;
+import com.mygdx.game.utils.TankOwner;
 
 public class BotTank extends Tank {
     Direction preferredDirection;
     float aiTimer;
     float aiTimerTo;
+    float pursuitRadius;
     boolean active;
 
     public boolean isActive() {
@@ -22,6 +25,7 @@ public class BotTank extends Tank {
 
     public BotTank(MyGdxGame game, TextureAtlas atlas) {
         super(game);
+        this.ownerType = TankOwner.AI;
         this.weapon = new Weapon(atlas);
         this.texture = atlas.findRegion("botTankBase");
         this.textureHp = atlas.findRegion("bar");
@@ -33,6 +37,7 @@ public class BotTank extends Tank {
         this.hpMax = 3;
         this.hp = this.hpMax;
         this.aiTimerTo = 3.0f;
+        this.pursuitRadius = 300.0f;
         this.preferredDirection = Direction.UP;
         this.circle = new Circle(position.x, position.y, (width + height)/2);
     }
@@ -61,6 +66,11 @@ public class BotTank extends Tank {
             angle = preferredDirection.getAngel();
         }
         position.add(speed * preferredDirection.getVx() * dt, speed * preferredDirection.getVy() * dt);
+        float dts = this.position.dst(game.getPlayer().getPosition());
+        if (dts < pursuitRadius) {
+            rotateTurretToPoint(game.getPlayer().getPosition().x, game.getPlayer().getPosition().y, dt);
+            fire(dt);
+        }
         super.update(dt);
     }
 }

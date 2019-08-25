@@ -3,12 +3,18 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.units.Tank;
 
 public class Bullet {
+    private Tank owner;
     private Vector2 position;
     private Vector2 velocity;
     private int damage;
     private boolean active;
+
+    public Tank getOwner() {
+        return owner;
+    }
 
     public Vector2 getPosition() {
         return position;
@@ -33,7 +39,8 @@ public class Bullet {
         active = false;
     }
 
-    public void activate (float x, float y, float vx, float vy, int damage) {
+    public void activate (Tank owner, float x, float y, float vx, float vy, int damage) {
+        this.owner = owner;
         this.active = true;
         this.position.set(x, y);
         this.velocity.set(vx, vy);

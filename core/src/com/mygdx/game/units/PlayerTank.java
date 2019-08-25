@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Weapon;
+import com.mygdx.game.utils.TankOwner;
 
 public class PlayerTank extends Tank {
 
@@ -16,6 +17,7 @@ public class PlayerTank extends Tank {
 
     public PlayerTank(MyGdxGame game, TextureAtlas atlas) {
         super(game);
+        this.ownerType = TankOwner.PLAYER;
         this.weapon = new Weapon(atlas);
         this.texture = atlas.findRegion("playerTankBase");
         this.textureHp = atlas.findRegion("bar");
@@ -62,7 +64,9 @@ public class PlayerTank extends Tank {
         checkMovement(dt);
         float mx = Gdx.input.getX();
         float my = Gdx.graphics.getHeight() - Gdx.input.getY();
+
         rotateTurretToPoint(mx, my, dt);
+
         if (Gdx.input.isTouched()){
             fire(dt);
         }

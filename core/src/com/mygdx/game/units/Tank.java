@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.utils.TankOwner;
 import com.mygdx.game.utils.Utils;
 import com.mygdx.game.Weapon;
 
 public abstract class Tank {
      MyGdxGame game;
+     TankOwner ownerType;
      Weapon weapon;
      TextureRegion texture;
      TextureRegion textureHp;
@@ -31,6 +33,14 @@ public abstract class Tank {
 
     public Circle getCircle() {
         return circle;
+    }
+
+    public TankOwner getOwnerType() {
+        return ownerType;
+    }
+
+    public Vector2 getPosition() {
+        return position;
     }
 
     public Tank(MyGdxGame game) {
@@ -93,7 +103,7 @@ public abstract class Tank {
             if (fireTimer >= weapon.getFirePeriod()) {
                 fireTimer = 0.0f;
                 float angleRad = (float)Math.toRadians(turretAngle);
-                game.getBulletEmitter().activate(position.x, position.y, 320.0f*(float)Math.cos(angleRad), 320.0f*(float)Math.sin(angleRad), weapon.getDamage());
+                game.getBulletEmitter().activate(this, position.x, position.y, 320.0f*(float)Math.cos(angleRad), 320.0f*(float)Math.sin(angleRad), weapon.getDamage());
             }
 
     }
