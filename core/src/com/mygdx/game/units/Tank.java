@@ -34,7 +34,15 @@ public abstract class Tank {
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, angle);
         batch.draw(weapon.getTexture(), position.x - width / 2, position.y - height / 2, width / 2, height / 2 , width,height,1,1, turretAngle);
-        batch.draw(textureHp, position.x - width / 2, position.y + height / 2 - 8);
+        if (hp < hpMax) {
+            batch.setColor(0,0,0,0.8f);
+            batch.draw(textureHp, position.x - width / 2 - 2, position.y + height / 2 - 8 + 8, 44, 12);
+            batch.setColor(0,1,0,0.8f);
+            batch.draw(textureHp, position.x - width / 2, position.y + height / 2 - 8 + 10, ((float)hp / hpMax) * 40, 8);
+            batch.setColor(1,1,1,1);
+        }
+
+
     }
 
     public void update(float dt) {
