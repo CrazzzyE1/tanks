@@ -3,23 +3,33 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.mygdx.game.units.PlayerTank;
+import com.mygdx.game.units.Tank;
 
+// to Second version - Note REALISE!!!
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
-	private Tank tank;
-	private Bullet bullet;
+	private Map map;
+	private PlayerTank player ;
+	private BulletEmitter bulletEmitter;
+	private BotEmitter botEmitter;
+	private float gameTimer;
 
-	public Bullet getBullet() {
-		return bullet;
+	public BulletEmitter getBulletEmitter() {
+		return bulletEmitter;
 	}
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		tank = new Tank(this);
-		bullet = new Bullet();
+		map = new Map();
+		player = new PlayerTank(this);
+		bulletEmitter = new BulletEmitter();
+		botEmitter = new BotEmitter(this);
+		botEmitter.activate(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight()));
+
 
 	}
 
@@ -30,20 +40,23 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0.6f, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		// Место где происходит вся движуха кода
-		tank.render(batch);
-		if(bullet.isActive()){
-			bullet.render(batch);
-		}
+		map.render(batch);
+		player.render(batch);
+		botEmitter.render(batch);
+		bulletEmitter.render(batch);
 
 		batch.end();
 	}
 
 	public void update(float dt) {
-		tank.update(dt);
-		if(bullet.isActive()){
-			bullet.update(dt);
+		gameTimer += dt;
+		if (gameTimer > 10.0f){
+			gameTimer = 0.0f;
+			botEmitter.activate(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight()));
 		}
+		player.update(dt);
+		botEmitter.update(dt);
+		bulletEmitter.update(dt);
 
 	}
 	
