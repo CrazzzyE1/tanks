@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.utils.Direction;
 import com.mygdx.game.utils.TankOwner;
 import com.mygdx.game.utils.Utils;
 import com.mygdx.game.Weapon;
@@ -18,6 +20,7 @@ public abstract class Tank {
      TextureRegion texture;
      TextureRegion textureHp;
 
+     Vector2 tmp;
      Vector2 position;
      Circle circle;
 
@@ -45,6 +48,7 @@ public abstract class Tank {
 
     public Tank(MyGdxGame game) {
         this.game = game;
+        this.tmp = new Vector2(0.0f, 0.0f);
     }
 
     public void render(SpriteBatch batch) {
@@ -97,8 +101,18 @@ public abstract class Tank {
         turretAngle = Utils.angleToFromNegPiToPosPi(turretAngle);
     }
 
+    public void move(Direction direction, float dt) {
+        tmp.set(position);
+        tmp.add(speed * direction.getVx() * dt, speed * direction.getVy() * dt);
+        if (game.getMap().isAreaClear(tmp.x, tmp.y, width/2)){
+            angle = direction.getAngel();
+            position.set(tmp);
+        }
 
-    public void fire(float dt) {
+    }
+
+
+    public void fire() {
 
             if (fireTimer >= weapon.getFirePeriod()) {
                 fireTimer = 0.0f;

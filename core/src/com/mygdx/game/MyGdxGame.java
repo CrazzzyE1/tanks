@@ -30,6 +30,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		return bulletEmitter;
 	}
 
+	public Map getMap() {
+		return map;
+	}
+
 	@Override
 	public void create () {
 		TextureAtlas atlas = new TextureAtlas("game.pak");

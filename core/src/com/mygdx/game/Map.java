@@ -39,7 +39,35 @@ public class Map {
 
     }
 
+    public boolean isAreaClear (float x, float y, float halfSize) {
+        int leftX = (int)((x - halfSize) / CELL_SIZE);
+        int rightX = (int)((x + halfSize) / CELL_SIZE);
+        int bottomY = (int)((y - halfSize) / CELL_SIZE);
+        int topY = (int)((y + halfSize) / CELL_SIZE);
 
+        if (leftX < 0) {
+            leftX = 0;
+        }
+        if (rightX >= SIZE_X) {
+            rightX = SIZE_X - 1;
+        }
+        if (bottomY < 0) {
+            bottomY = 0;
+        }
+        if (topY >= SIZE_Y) {
+            topY = SIZE_Y - 1;
+        }
+
+        for (int i = leftX; i <= rightX; i++) {
+            for (int j = bottomY; j <= topY; j++) {
+                if(obstacles[i][j] > 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
 
     public void render(SpriteBatch batch) {
         for (int i = 0; i < 1280 / 40; i++) {
