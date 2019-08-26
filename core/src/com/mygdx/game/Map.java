@@ -20,8 +20,12 @@ public class Map {
         this.wallTexture = atlas.findRegion("block");
         this.obstacles = new int[SIZE_X][SIZE_Y];
         for (int i = 0; i < SIZE_X; i++) {
-            for (int j = 0; j < 3; j++) {
-                obstacles[i][SIZE_Y - 1 - j] = 5;
+            for (int j = 0; j < SIZE_Y; j++) {
+                int cx = (int)(i / 4);
+                int cy = (int)(j / 4);
+                if (cx % 2 == 0 && cy % 2 == 0) {
+                    obstacles[i][j] = 5;
+                }
             }
         }
     }
