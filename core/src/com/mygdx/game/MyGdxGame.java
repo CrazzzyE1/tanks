@@ -11,7 +11,7 @@ import com.mygdx.game.units.BotTank;
 import com.mygdx.game.units.PlayerTank;
 import com.mygdx.game.units.Tank;
 
-// to Third version - Note REALISE!!!
+// to 4 version - Note REALISE!!!
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Map map;
