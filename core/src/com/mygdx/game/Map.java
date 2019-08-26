@@ -4,29 +4,82 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 
 public class Map {
+    public enum WallType{
+        HARD(0, 5, true), SOFT(1, 3, true), DESTRUCTIBLE(2, 1, false), NONE(0,0,false);
+        int index;
+        int maxHp;
+        boolean destructible;
+
+        WallType(int index, int maxHp, boolean destructible) {
+            this.index = index;
+            this.maxHp = maxHp;
+            this.destructible = destructible;
+        }
+    }
+
+    private class Cell {
+        WallType type;
+        int hp;
+
+        public Cell(WallType type) {
+            this.type = type;
+            this.hp = type.maxHp;
+        }
+
+        public void damage () {
+            if (type.destructible) {
+                hp--;
+                if (hp <= 0) {
+                    type = WallType.NONE;
+                }
+            }
+        }
+
+        public void changeType (WallType type) {
+            this.type = type;
+            this.hp = type.maxHp;
+        }
+    }
+
     public static final int SIZE_X = 64;
     public static final int SIZE_Y = 36;
     public static final int CELL_SIZE = 20;
 
 
     private TextureRegion grassTexture;
-    private TextureRegion wallTexture;
-    private int obstacles[][];
+    private TextureRegion[][] wallsTexture;
+    private Cell cells[][];
 
     public Map(TextureAtlas atlas) {
+        this.wallsTexture = new TextureRegion(atlas.findRegion("walls")).split(CELL_SIZE, CELL_SIZE);
         this.grassTexture = atlas.findRegion("grass40");
-        this.wallTexture = atlas.findRegion("block");
-        this.obstacles = new int[SIZE_X][SIZE_Y];
+        this.cells = new Cell[SIZE_X][SIZE_Y];
         for (int i = 0; i < SIZE_X; i++) {
             for (int j = 0; j < SIZE_Y; j++) {
+                cells[i][j] = new Cell(WallType.NONE);
                 int cx = i / 4;
                 int cy = j / 4;
                 if (cx % 2 == 0 && cy % 2 == 0) {
-                    obstacles[i][j] = 5;
+                    if (MathUtils.random() < 0.8f) {
+                        cells[i][j].changeType(WallType.HARD);
+                    } else {
+                        cells[i][j].changeType(WallType.SOFT);
+                    }
                 }
             }
+        }
+        for (int i = 0; i < SIZE_X; i++) {
+            cells[i][0].changeType(WallType.DESTRUCTIBLE);
+            cells[i][SIZE_Y - 1].changeType(WallType.DESTRUCTIBLE);
+
+        }
+        for (int i = 0; i < SIZE_Y; i++) {
+            cells[0][i].changeType(WallType.DESTRUCTIBLE);
+            cells[SIZE_X - 1][i].changeType(WallType.DESTRUCTIBLE);
+
         }
     }
 
@@ -35,8 +88,8 @@ public class Map {
         int cy = (int)bullet.getPosition().y / CELL_SIZE;
 
         if(cx>=0 && cy >=0 && cx < SIZE_X && cy <=SIZE_Y) {
-            if (obstacles[cx][cy] > 0) {
-                obstacles[cx][cy] -= bullet.getDamage();
+            if (cells[cx][cy].type != WallType.NONE) {
+                cells[cx][cy].damage();
                 bullet.deactivate();
             }
         }
@@ -64,7 +117,7 @@ public class Map {
 
         for (int i = leftX; i <= rightX; i++) {
             for (int j = bottomY; j <= topY; j++) {
-                if(obstacles[i][j] > 0) {
+                if(cells[i][j].type != WallType.NONE) {
                     return false;
                 }
             }
@@ -81,8 +134,8 @@ public class Map {
         }
         for (int i = 0; i < SIZE_X; i++) {
             for (int j = 0; j < SIZE_Y; j++) {
-                if (obstacles[i][j] > 0) {
-                    batch.draw(wallTexture , i * CELL_SIZE, j * CELL_SIZE);
+                if (cells[i][j].type != WallType.NONE) {
+                    batch.draw(wallsTexture[cells[i][j].type.index] [cells[i][j].hp - 1], i * CELL_SIZE, j * CELL_SIZE);
                 }
             }
         }
