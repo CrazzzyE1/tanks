@@ -3,6 +3,8 @@ package com.mygdx.game.units;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -12,7 +14,7 @@ import com.mygdx.game.utils.Direction;
 import com.mygdx.game.utils.TankOwner;
 
 public class PlayerTank extends Tank {
-
+    int scores;
     int lives;
 
 
@@ -51,10 +53,18 @@ public class PlayerTank extends Tank {
         }
     }
 
+    public void getScore(int amount) {
+        scores += amount;
+    }
+
     @Override
     public void destroy() {
         lives--;
         hp = hpMax;
+    }
+
+    public void renderHUD(SpriteBatch batch, BitmapFont font24) {
+        font24.draw(batch, "Score: " + scores + "\nLives: " + lives, 10, 700);
     }
 
     public void update(float dt) {

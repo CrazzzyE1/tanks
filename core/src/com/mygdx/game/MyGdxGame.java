@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
@@ -14,6 +15,7 @@ import com.mygdx.game.units.Tank;
 // to 4 version - Note REALISE!!!
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
+	private BitmapFont font24;
 	private Map map;
 	private PlayerTank player ;
 	private BulletEmitter bulletEmitter;
@@ -38,6 +40,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void create () {
 		TextureAtlas atlas = new TextureAtlas("game.pack");
 		batch = new SpriteBatch();
+		font24 = new BitmapFont(Gdx.files.internal("font24.fnt"));
 		map = new Map(atlas);
 		player = new PlayerTank(this, atlas);
 		bulletEmitter = new BulletEmitter(atlas);
@@ -58,6 +61,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		player.render(batch);
 		botEmitter.render(batch);
 		bulletEmitter.render(batch);
+		player.renderHUD(batch, font24);
 
 		batch.end();
 	}
