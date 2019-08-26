@@ -42,7 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		player = new PlayerTank(this, atlas);
 		bulletEmitter = new BulletEmitter(atlas);
 		botEmitter = new BotEmitter(this, atlas);
-		botEmitter.activate(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight()));
+		gameTimer = 6.0f;
 
 
 	}
@@ -66,7 +66,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		gameTimer += dt;
 		if (gameTimer > 5.0f){
 			gameTimer = 0.0f;
-			botEmitter.activate(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight()));
+
+			float coordX, coordY;
+			do {
+				coordX = MathUtils.random(0, Gdx.graphics.getWidth());
+				coordY = MathUtils.random(0, Gdx.graphics.getHeight());
+
+			} while (!map.isAreaClear(coordX,coordY,20));
+
+			botEmitter.activate(coordX, coordY);
 		}
 		player.update(dt);
 		botEmitter.update(dt);
