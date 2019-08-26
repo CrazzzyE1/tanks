@@ -3,19 +3,23 @@ package com.mygdx.game.units;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.GameScreen;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Weapon;
+import com.mygdx.game.utils.Direction;
 import com.mygdx.game.utils.TankOwner;
 
 public class PlayerTank extends Tank {
-
+    int scores;
     int lives;
 
 
-    public PlayerTank(MyGdxGame game, TextureAtlas atlas) {
+    public PlayerTank(GameScreen game, TextureAtlas atlas) {
         super(game);
         this.ownerType = TankOwner.PLAYER;
         this.weapon = new Weapon(atlas);
@@ -26,38 +30,42 @@ public class PlayerTank extends Tank {
         this.width = texture.getRegionWidth();
         this.height = texture.getRegionHeight();
         this.hpMax = 10;
-        this.hp = this.hpMax - 2;
+        this.hp = this.hpMax;
         this.circle = new Circle(position.x, position.y, (width + height)/2);
         this.lives = 5;
     }
 
     public void checkMovement(float dt) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            position.x -= speed * dt;
-            angle = 180.0f;
+            move(Direction.LEFT, dt);
             return;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            position.x += speed * dt;
-            angle = 0.0f;
+            move(Direction.RIGHT, dt);
             return;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-            position.y += speed * dt;
-            angle = 90.0f;
+            move(Direction.UP, dt);
             return;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            position.y -= speed * dt;
-            angle = 270.0f;
+            move(Direction.DOWN, dt);
             return;
         }
+    }
+
+    public void getScore(int amount) {
+        scores += amount;
     }
 
     @Override
     public void destroy() {
         lives--;
         hp = hpMax;
+    }
+
+    public void renderHUD(SpriteBatch batch, BitmapFont font24) {
+        font24.draw(batch, "Score: " + scores + "\nLives: " + lives, 10, 700);
     }
 
     public void update(float dt) {
@@ -68,7 +76,7 @@ public class PlayerTank extends Tank {
         rotateTurretToPoint(mx, my, dt);
 
         if (Gdx.input.isTouched()){
-            fire(dt);
+            fire();
         }
         super.update(dt);
     }
