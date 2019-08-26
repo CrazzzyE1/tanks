@@ -7,7 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.units.BotTank;
 import com.mygdx.game.units.PlayerTank;
 import com.mygdx.game.units.Tank;
@@ -21,6 +27,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	private BulletEmitter bulletEmitter;
 	private BotEmitter botEmitter;
 	private float gameTimer;
+	private Stage stage;
+	private boolean paused;
 
 	private static final boolean FRIENDLY_FIRE = false;
 
@@ -46,6 +54,23 @@ public class MyGdxGame extends ApplicationAdapter {
 		bulletEmitter = new BulletEmitter(atlas);
 		botEmitter = new BotEmitter(this, atlas);
 		gameTimer = 6.0f;
+		stage = new Stage();
+		Skin skin = new Skin();
+		skin.add("simpleButton", new TextureRegion(atlas.findRegion("SimpleButton")));
+		TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.up = skin.getDrawable("simpleButton");
+		textButtonStyle.font = font24;
+
+		TextButton pauseButton = new TextButton("Pause", textButtonStyle);
+		pauseButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+					paused = !paused;
+			}
+		});
+		pauseButton.setPosition(800, 680);
+		stage.addActor(pauseButton);
+		Gdx.input.setInputProcessor(stage);
 
 
 	}
@@ -62,28 +87,33 @@ public class MyGdxGame extends ApplicationAdapter {
 		botEmitter.render(batch);
 		bulletEmitter.render(batch);
 		player.renderHUD(batch, font24);
-
 		batch.end();
+		stage.draw();
 	}
 
 	public void update(float dt) {
-		gameTimer += dt;
-		if (gameTimer > 5.0f){
-			gameTimer = 0.0f;
+		if(!paused) {
+			gameTimer += dt;
+			if (gameTimer > 5.0f) {
+				gameTimer = 0.0f;
 
-			float coordX, coordY;
-			do {
-				coordX = MathUtils.random(0, Gdx.graphics.getWidth());
-				coordY = MathUtils.random(0, Gdx.graphics.getHeight());
+				float coordX, coordY;
+				do {
+					coordX = MathUtils.random(0, Gdx.graphics.getWidth());
+					coordY = MathUtils.random(0, Gdx.graphics.getHeight());
 
-			} while (!map.isAreaClear(coordX,coordY,20));
+				} while (!map.isAreaClear(coordX, coordY, 20));
 
-			botEmitter.activate(coordX, coordY);
+				botEmitter.activate(coordX, coordY);
+			}
+			player.update(dt);
+			botEmitter.update(dt);
+			bulletEmitter.update(dt);
+
+			checkCollisions();
 		}
-		player.update(dt);
-		botEmitter.update(dt);
-		bulletEmitter.update(dt);
-		checkCollisions();
+			stage.act(dt);
+
 
 	}
 
