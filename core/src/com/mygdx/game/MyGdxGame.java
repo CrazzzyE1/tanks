@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -60,16 +61,29 @@ public class MyGdxGame extends ApplicationAdapter {
 		TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin.getDrawable("simpleButton");
 		textButtonStyle.font = font24;
+		Group group = new Group();
 
 		TextButton pauseButton = new TextButton("Pause", textButtonStyle);
+		TextButton exitButton = new TextButton("Exit", textButtonStyle);
 		pauseButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 					paused = !paused;
 			}
 		});
-		pauseButton.setPosition(800, 680);
-		stage.addActor(pauseButton);
+		exitButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.exit();
+			}
+		});
+
+		pauseButton.setPosition(0, 40);
+		exitButton.setPosition(0, 0);
+		group.addActor(pauseButton);
+		group.addActor(exitButton);
+		group.setPosition(1100, 640);
+		stage.addActor(group);
 		Gdx.input.setInputProcessor(stage);
 
 
