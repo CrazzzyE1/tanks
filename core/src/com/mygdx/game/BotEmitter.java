@@ -13,10 +13,10 @@ public class BotEmitter {
 
     public static final int MAX_BOTS_COUNT = 200;
 
-    public BotEmitter(MyGdxGame game, TextureAtlas atlas) {
+    public BotEmitter(GameScreen gameScreen, TextureAtlas atlas) {
         this.bots = new BotTank[MAX_BOTS_COUNT];
         for (int i = 0; i < bots.length; i++) {
-            this.bots[i] = new BotTank(game, atlas);
+            this.bots[i] = new BotTank(gameScreen, atlas);
         }
     }
 

@@ -1,12 +1,11 @@
 package com.mygdx.game.units;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.GameScreen;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.utils.Direction;
 import com.mygdx.game.utils.TankOwner;
@@ -14,7 +13,7 @@ import com.mygdx.game.utils.Utils;
 import com.mygdx.game.Weapon;
 
 public abstract class Tank {
-     MyGdxGame game;
+     GameScreen gameScreen;
      TankOwner ownerType;
      Weapon weapon;
      TextureRegion texture;
@@ -46,8 +45,8 @@ public abstract class Tank {
         return position;
     }
 
-    public Tank(MyGdxGame game) {
-        this.game = game;
+    public Tank(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
         this.tmp = new Vector2(0.0f, 0.0f);
     }
 
@@ -104,7 +103,7 @@ public abstract class Tank {
     public void move(Direction direction, float dt) {
         tmp.set(position);
         tmp.add(speed * direction.getVx() * dt, speed * direction.getVy() * dt);
-        if (game.getMap().isAreaClear(tmp.x, tmp.y, width/2)){
+        if (gameScreen.getMap().isAreaClear(tmp.x, tmp.y, width/2)){
             angle = direction.getAngel();
             position.set(tmp);
         }
@@ -117,7 +116,7 @@ public abstract class Tank {
             if (fireTimer >= weapon.getFirePeriod()) {
                 fireTimer = 0.0f;
                 float angleRad = (float)Math.toRadians(turretAngle);
-                game.getBulletEmitter().activate(this, position.x, position.y, weapon.getProjectileSpeed()*(float)Math.cos(angleRad), weapon.getProjectileSpeed()*(float)Math.sin(angleRad), weapon.getDamage(), weapon.getProjectileLifeTime());
+                gameScreen.getBulletEmitter().activate(this, position.x, position.y, weapon.getProjectileSpeed()*(float)Math.cos(angleRad), weapon.getProjectileSpeed()*(float)Math.sin(angleRad), weapon.getDamage(), weapon.getProjectileLifeTime());
             }
 
     }

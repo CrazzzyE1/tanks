@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.GameScreen;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Weapon;
 import com.mygdx.game.utils.Direction;
@@ -18,7 +19,7 @@ public class PlayerTank extends Tank {
     int lives;
 
 
-    public PlayerTank(MyGdxGame game, TextureAtlas atlas) {
+    public PlayerTank(GameScreen game, TextureAtlas atlas) {
         super(game);
         this.ownerType = TankOwner.PLAYER;
         this.weapon = new Weapon(atlas);
