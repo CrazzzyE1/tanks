@@ -36,7 +36,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		TextureAtlas atlas = new TextureAtlas("game.pak");
+		TextureAtlas atlas = new TextureAtlas("game.pack");
 		batch = new SpriteBatch();
 		map = new Map(atlas);
 		player = new PlayerTank(this, atlas);
